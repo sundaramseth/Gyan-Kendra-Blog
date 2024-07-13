@@ -23,15 +23,20 @@ export default function Header() {
         className="hidden sm:inline-block"
         />
         </form>
+
+        <div className="flex gap-2 md:order-2">
+
         <div className="sm:hidden">
-        <Button
+          <Link to='/search'>
+          <Button
         className="w-12 h-9"
         color='gray'
         pill
         ><AiOutlineSearch />
         </Button>
+          </Link>
         </div>
-        <div className="flex gap-2 md:order-2">
+        
          <Button className="w-12 h-9" 
          color="gray"
          pill
