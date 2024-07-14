@@ -7,6 +7,7 @@ import Projects from './pages/Projects'
 import Dashboard from './pages/Dashboard'
 import Header from './components/Header'
 import Search from './pages/Search'
+import Footer from './components/Footer'
 
 
 export default function App() {
@@ -22,6 +23,7 @@ export default function App() {
       <Route path='/search' element={<Search />} />
       <Route path='/dashboard' element={<Dashboard />} />
     </Routes>
+    <Footer />
     </BrowserRouter>
   );
 }
