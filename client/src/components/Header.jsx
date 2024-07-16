@@ -2,14 +2,18 @@
 import { Avatar, Button, Dropdown, Navbar, NavbarToggle } from "flowbite-react";
 import { Link, useLocation } from "react-router-dom";
 import { TextInput } from "flowbite-react";
-import { AiOutlineSearch, AiOutlineMoon } from "react-icons/ai";
+import { AiOutlineSearch, AiOutlineMoon, AiOutlineSun } from "react-icons/ai";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import {toggleTheme} from '../redux/theme/themeSlice';
 
 export default function Header() {
 
   const path = useLocation().pathname;
+  const dispatch= useDispatch();
 
   const {currentUser} = useSelector(state => state.user);
+  const {theme} = useSelector(state => state.theme);
 
   return (
     <Navbar className="border-b-1">
@@ -43,11 +47,12 @@ export default function Header() {
          <Button className="w-12 h-9" 
          color="gray"
          pill
+         onClick={()=>dispatch(toggleTheme())}
          >
-          <AiOutlineMoon />
+          {theme === 'light' ? <AiOutlineSun/>:  <AiOutlineMoon /> }
          </Button>
          {currentUser ? (
-            <Dropdown 
+          <Dropdown 
           arrowIcon={false}
           inline
           label={
@@ -72,8 +77,7 @@ export default function Header() {
               Sign Out
              </Dropdown.Item>
           </Dropdown>
-          ):
-         (
+          ):(
         <Link to='/signin' className="">
         <Button
         gradientDuoTone='purpleToBlue'
