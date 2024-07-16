@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
     },
     profilePicture:{
         type:String,
-        default:"https://static-00.iconduck.com/assets.00/profile-circle-icon-512x512-zxne30hp.png",
+        default:"https://www.freeiconspng.com/uploads/am-a-19-year-old-multimedia-artist-student-from-manila--21.png",
     }
 },{timestamps:true});
 

@@ -6,6 +6,7 @@ import { AiOutlineSearch, AiOutlineMoon, AiOutlineSun } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import {toggleTheme} from '../redux/theme/themeSlice';
+import { PiSignOutFill } from "react-icons/pi";
 
 export default function Header() {
 
@@ -74,7 +75,7 @@ export default function Header() {
             </Link>
             <Dropdown.Divider />
              <Dropdown.Item>
-              Sign Out
+              <PiSignOutFill className="font-bold"/><span className="ml-2">Sign Out</span>
              </Dropdown.Item>
           </Dropdown>
           ):(
