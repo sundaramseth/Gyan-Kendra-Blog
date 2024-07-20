@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { type } from "os";
 
 const userSchema = new mongoose.Schema({
     username:{
@@ -18,6 +19,10 @@ const userSchema = new mongoose.Schema({
     profilePicture:{
         type:String,
         default:"https://www.freeiconspng.com/uploads/am-a-19-year-old-multimedia-artist-student-from-manila--21.png",
+    },
+    isAdmin:{
+        type:Boolean,
+        default:false
     }
 },{timestamps:true});
 
