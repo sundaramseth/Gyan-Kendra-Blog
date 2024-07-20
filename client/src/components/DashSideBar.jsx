@@ -4,9 +4,12 @@ import { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
 import { Link } from "react-router-dom";
 import { PiSignOutFill } from "react-icons/pi";
+import { signOutUser } from "../redux/user/userSlice";
+import { useDispatch } from "react-redux";
 
 export default function DashSideBar() {
 
+  const dispatch= useDispatch();
     const location = useLocation();
     const [tab, setTab] = useState('');
     useEffect(()=>{
@@ -16,6 +19,24 @@ export default function DashSideBar() {
         setTab(tabFormUrl);
       }
     }, [location.search])
+
+    const handleSignOut = async () =>{
+      try{
+        const res = await fetch('/api/user/signout',{
+          method:'POST',
+        });
+  
+        const data = await res.json();
+  
+        if(!res.ok){
+          console.log(data.message)
+        }else{
+            dispatch(signOutUser());
+        }
+      }catch(error){
+        console.log(error);
+      }
+    }
 
   return (
    <Sidebar className="w-full md:w-56">
@@ -27,13 +48,9 @@ export default function DashSideBar() {
              </Sidebar.Item>
              </Link>
 
-             <Link to='/dashboard?tab=profile'>
-             <Sidebar.Item icon={PiSignOutFill} as='div'>
-          Sign Out
+             <Sidebar.Item  onClick={handleSignOut} icon={PiSignOutFill} className='cursor-pointer'>
+              Sign Out
              </Sidebar.Item>
-             </Link>
-
-
         </Sidebar.ItemGroup>
     </Sidebar.Items>
    </Sidebar>

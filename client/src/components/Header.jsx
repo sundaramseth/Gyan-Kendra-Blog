@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import {toggleTheme} from '../redux/theme/themeSlice';
 import { PiSignOutFill } from "react-icons/pi";
+import { signOutUser } from "../redux/user/userSlice";
 
 export default function Header() {
 
@@ -15,6 +16,26 @@ export default function Header() {
 
   const {currentUser} = useSelector(state => state.user);
   const {theme} = useSelector(state => state.theme);
+
+
+  const handleSignOut = async () =>{
+    try{
+      const res = await fetch('/api/user/signout',{
+        method:'POST',
+      });
+
+      const data = await res.json();
+
+      if(!res.ok){
+        console.log(data.message)
+      }else{
+          dispatch(signOutUser());
+      }
+    }catch(error){
+      console.log(error);
+    }
+  }
+
 
   return (
     <Navbar className="border-b-1">
@@ -74,7 +95,7 @@ export default function Header() {
              </Dropdown.Item>
             </Link>
             <Dropdown.Divider />
-             <Dropdown.Item>
+             <Dropdown.Item onClick={handleSignOut}>
               <PiSignOutFill className="font-bold"/><span className="ml-2">Sign Out</span>
              </Dropdown.Item>
           </Dropdown>
