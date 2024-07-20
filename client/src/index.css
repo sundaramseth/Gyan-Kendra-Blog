@@ -5,3 +5,11 @@
 .border-b-1{
     border-bottom: 1px solid gray;
 }
+
+body{
+    height: 100vh;
+}
+
+.ql-editor{
+font-size: 1.05rem;
+}

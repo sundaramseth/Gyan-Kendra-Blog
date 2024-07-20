@@ -9,6 +9,8 @@ import Header from './components/Header'
 import Search from './pages/Search'
 import Footer from './components/Footer'
 import PrivateRoute from './components/PrivateRoute'
+import CreatePost from './pages/CreatePost'
+import PrivateRouteAdmin from './components/PrivateRouteAdmin'
 
 export default function App() {
   return (
@@ -21,6 +23,9 @@ export default function App() {
       <Route path='/signin' element={<SignIn />} />
       <Route element={<PrivateRoute />}>
       <Route path='/dashboard' element={<Dashboard />} />
+      </Route>
+      <Route element={<PrivateRouteAdmin/>}>
+       <Route path='/create-post' element={<CreatePost/>} />
       </Route>
       <Route path='/projects' element={<Projects />} />
       <Route path='/search' element={<Search />} />
