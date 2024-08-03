@@ -17,8 +17,7 @@ export default function CreatePost() {
   const [imageUploadError, setImageUploadError] = useState(null);
   const [formData, setFormData] = useState({});
   const [publishError, setPublishError] = useState(null);
-  // console.log(formData)
-console.log(publishError)
+
   const handleUploadImage = async () =>{
     try {
       if(!file){
@@ -42,7 +41,7 @@ console.log(publishError)
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL)=>{
           setImageUploadError(null);
           setImageUploadProgress(null);
-         setFormData({...formData, image:downloadURL});
+         setFormData({...formData, postImage:downloadURL});
         })
       }
      )

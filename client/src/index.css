@@ -13,3 +13,11 @@ body{
 .ql-editor{
 font-size: 1.05rem;
 }
+
+.mywidth{
+    width: 100%;
+}
+
+.w-inherit{
+    width: inherit !important;
+}

@@ -41,7 +41,7 @@ export default function Header() {
     <Navbar className="border-b-1">
         <Link to='/' 
         className="self-center whitespace-nowrap text-sm sm:text-xl font-semibold">
-        Adhyatma
+        HashCode
         </Link>
         
         <form>

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { type } from "os";
 
 const postScema = new mongoose.Schema({
     userId:{
@@ -21,11 +22,15 @@ const postScema = new mongoose.Schema({
         type:String,
         required:true
        },
-       slug:{
+    slug:{
         type:String,
         required:true,
         unique:true
-       }
+    },
+    createdOn:{
+        type: Date,
+        default:Date.now()
+    }
     },{timeStamp:true});
 
 const Post = mongoose.model('Post',postScema);
