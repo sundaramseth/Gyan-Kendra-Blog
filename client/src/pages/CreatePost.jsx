@@ -29,7 +29,7 @@ export default function CreatePost() {
      const fileName = new Date().getTime() + '_' + file.name;
      const storageRef = ref(storage, fileName);
      const uploadTask = uploadBytesResumable(storageRef, file) 
-     uploadTask.on(
+    uploadTask.on(
       'state_changed',
       (snapshot)=>{
         const progress = (snapshot.bytesTransferred /snapshot.totalBytes) * 100;
@@ -106,6 +106,14 @@ export default function CreatePost() {
         </Select>
         </div>
         
+
+        {formData.postImage && (
+          <img src={formData.postImage}
+          alt="upload"
+          className="w-full h-72 object-cover border-2"
+          />
+         )}
+         
         <div className="flex gap-4 items-center justify-between 
         border-4 border-teal-500 border-dotted p-3">
            <FileInput type='file' accept="images/*" className="flex-1" onChange={(e)=>setFile(e.target.files[0])} />
@@ -126,12 +134,7 @@ export default function CreatePost() {
           <Alert color='failure'>{imageUploadError}</Alert>
          )}
 
-         {formData.image && (
-          <img src={formData.image}
-          alt="upload"
-          className="w-full h-72 object-cover border-2"
-          />
-         )}
+    
          <ReactQuill theme="snow" placeholder="Write something..." className="h-80 my-4" required
           onChange={(value)=>  {
             setFormData({...formData, content:value});

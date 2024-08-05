@@ -21,3 +21,46 @@ font-size: 1.05rem;
 .w-inherit{
     width: inherit !important;
 }
+
+.post-content p{
+    margin-bottom: 0.5rem;
+
+}
+
+.post-content h1{
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    font-family: sans-serif;
+    margin: 1.5rem 0;
+
+}
+
+.post-content h2{
+    margin-bottom: 1.4rem;
+    font-family: sans-serif;
+    margin: 1.5rem 0;
+}
+
+
+.post-content h3{
+    margin-bottom: 1.2rem;
+    font-family: sans-serif;
+    margin: 1.5rem 0;
+}
+
+
+.post-content p{
+    margin-bottom: 1rem;
+    font-family: sans-serif;
+    margin: 1.5rem 0;
+}
+
+
+.post-content a{
+  color:dodgerblue;
+  text-decoration: none;
+}
+
+.post-content a:hover{
+    text-decoration: underline;
+  }
