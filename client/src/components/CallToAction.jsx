@@ -2,7 +2,7 @@ import { Button } from "flowbite-react";
 
 export default function CallToAction() {
   return (
-    <div className="flex md:flex-row flex-col-reverse justify-evenly bg-yellow-50 rounded-lg">
+    <div className="flex md:flex-row flex-col-reverse justify-evenly bg-yellow-50 rounded-lg outline outline-gray-400">
       <div className="p-7">
        <h2 className="font-semibold text-2xl my-4 text-black">
         Want to Learn more about Java
