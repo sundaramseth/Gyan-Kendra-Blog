@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
 import { Link } from "react-router-dom";
 import CallToAction from "../components/CallToAction";
+import CommentSection from "../components/CommentSection";
 
 export default function PostPage() {
 
@@ -10,7 +11,7 @@ export default function PostPage() {
     const [loading,setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [post,setPost] = useState(null);
-
+    
     console.log(error)
 
     useEffect(()=>{
@@ -76,7 +77,8 @@ export default function PostPage() {
         <CallToAction/>
     </div>
 
-    
+    <CommentSection postId={post && post._id}  />
+
     </main>
   )
 }
