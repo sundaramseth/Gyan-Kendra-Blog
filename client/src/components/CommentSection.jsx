@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import {useSelector} from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import Comment from './Comment';
+import { editComment } from '../../../api/controllers/comment.controler';
 
 
 const CommentSection = ({postId}) => {
@@ -101,6 +102,15 @@ const CommentSection = ({postId}) => {
 
       }
 
+
+      const handleEdit = async (comment, editedContent) => {
+        setComments(
+          comments.map((c) =>
+            c._id === comment._id ? { ...c, content: editedContent } : c
+          )
+        );
+      };
+
    
    
     return (
@@ -176,6 +186,7 @@ const CommentSection = ({postId}) => {
           key={comment._id}
           comment={comment}
           onLike={handleLikes}
+          onEdit={handleEdit}
           />
         )}
         </>
