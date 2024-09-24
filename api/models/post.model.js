@@ -27,6 +27,14 @@ const postScema = new mongoose.Schema({
         required:true,
         unique:true
     },
+    likes: {
+        type: Array,
+        default: [],
+    },
+    numberOfLikes: {
+        type: Number,
+        default: 0,
+    },
     createdOn:{
         type: Date,
         default:Date.now()

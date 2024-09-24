@@ -5,14 +5,14 @@ import { FaFacebook, FaLinkedin, FaTwitter } from "react-icons/fa";
 
 export default function FooterCom() {
   return (
-    <Footer container className="border border-t-4 border-blue-800">
-      <div className="w-full max-w-7xl mx-auto">
+    <Footer container className="">
+      <div className="w-full mx-auto">
         <div className="grid grid-cols-1 w-full justify-between sm:flex">
        
         <div className="mt-5">
        <Link to='/' 
         className="self-center whitespace-nowrap sm:text-xl font-semibold">
-        Adhyatma
+        Global Gyan
         </Link>
        </div>
       
@@ -86,7 +86,7 @@ export default function FooterCom() {
         </div>
         <Footer.Divider />
        <div className="w-full sm:flex sm:items-center sm:justify-between ">
-        <Footer.Copyright href='#' by='Adhyatma' year={new Date().getFullYear()} />
+        <Footer.Copyright href='#' by='Global Gyan' year={new Date().getFullYear()} />
        <div className="flex gap-6 sm:mt-0 sm:justify-center mt-4">
         <Footer.Icon href="#" icon={FaFacebook} />
         <Footer.Icon href="#" icon={FaLinkedin} />

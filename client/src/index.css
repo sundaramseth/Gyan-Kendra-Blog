@@ -6,8 +6,13 @@
     border-bottom: 1px solid gray;
 }
 
+.line-2x{
+    line-height: 58px;
+}
+
 body{
     height: 100vh;
+    background: #f4f2ee !important;
 }
 
 .ql-editor{
@@ -64,3 +69,41 @@ font-size: 1.05rem;
 .post-content a:hover{
     text-decoration: underline;
   }
+
+  .shadow{
+    box-shadow:none !important;
+  }
+
+  .rescolor{
+    color: black !important;
+  }
+
+  .bgback{
+    background: #f4f2ee;
+  }
+
+  .w-34rem{
+    width: 35rem;
+  }
+
+  @media only screen and (max-width: 600px)  {
+    .w-34rem{
+        width: 100% !important;
+      }
+  }
+
+  pre{
+    overflow: overlay !important;
+  }
+
+.mydrop{
+    border: none !important;
+    padding: 0px !important;
+    margin: 0px !important;
+    background: none !important;
+    font-size: 12px !important;
+    outline: none !important;
+    background-image: none !important;
+    color: #000 !important;
+    width: auto  !important;
+}

@@ -23,7 +23,7 @@ export default function Comment({comment, onLike, onEdit, onDelete}) {
                   setUser(data);
                 }
             } catch (error) {
-                console.log(error);
+                console.log(error.message);
             }
         }
         getUser();

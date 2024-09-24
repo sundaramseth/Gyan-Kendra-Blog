@@ -1,6 +1,6 @@
 
-import { Avatar, Button, Dropdown, Navbar, NavbarToggle } from "flowbite-react";
-import { Link, useLocation } from "react-router-dom";
+import { Avatar, Button, Dropdown, Navbar,  } from "flowbite-react";
+import { Link,  } from "react-router-dom";
 import { TextInput } from "flowbite-react";
 import { AiOutlineSearch, AiOutlineMoon, AiOutlineSun } from "react-icons/ai";
 import { useSelector } from "react-redux";
@@ -11,7 +11,7 @@ import { signOutUser } from "../redux/user/userSlice";
 
 export default function Header() {
 
-  const path = useLocation().pathname;
+  // const path = useLocation().pathname;
   const dispatch= useDispatch();
 
   const {currentUser} = useSelector(state => state.user);
@@ -39,11 +39,15 @@ export default function Header() {
 
   return (
     <Navbar className="border-b-1">
-        <Link to='/' 
+      <div className="flex w-1/4 justify-start items-start gap-2">
+       <Link to='/' 
         className="self-center whitespace-nowrap text-sm sm:text-xl font-semibold">
-        HashCode
+        Global Gyan
         </Link>
         
+
+        {currentUser && (
+          <>
         <form>
         <TextInput 
         type="text"
@@ -52,8 +56,6 @@ export default function Header() {
         className="hidden sm:inline-block"
         />
         </form>
-
-        <div className="flex gap-2 md:order-2">
 
         <div className="sm:hidden">
           <Link to='/search'>
@@ -64,8 +66,16 @@ export default function Header() {
         ><AiOutlineSearch />
         </Button>
           </Link>
+
         </div>
-        
+        </>
+        )}
+
+      </div>
+  
+        <div className="flex w-auto gap-2 md:order-2">
+
+        {currentUser && (
          <Button className="w-12 h-9" 
          color="gray"
          pill
@@ -73,6 +83,8 @@ export default function Header() {
          >
           {theme === 'light' ? <AiOutlineSun/>:  <AiOutlineMoon /> }
          </Button>
+         )
+        }
          {currentUser ? (
           <Dropdown 
           arrowIcon={false}
@@ -100,21 +112,33 @@ export default function Header() {
              </Dropdown.Item>
           </Dropdown>
           ):(
+
+            <>
+
+      <Link to='/signup' className="">
+      <Button
+        color='0094FF'
+         size="sm"
+        >
+        Join Now
+        </Button>
+      </Link>
         <Link to='/signin' className="">
         <Button
-        gradientDuoTone='purpleToBlue'
-        outline
+        pill
+        color="blue" 
+        size="sm"
         >
         Sign In
         </Button>
         </Link>
-         
+        </>
          )
          }
         
-        <NavbarToggle/>
+        {/* <NavbarToggle/> */}
         </div>
-        <Navbar.Collapse>
+        {/* <Navbar.Collapse>
           <Navbar.Link active={path === "/"} as={'div'}>
             <Link to='/'>Home</Link>
           </Navbar.Link>
@@ -124,7 +148,7 @@ export default function Header() {
           <Navbar.Link active={path === "/projects"} as={'div'}>
           <Link to='/projects'>Projects</Link>
           </Navbar.Link>
-        </Navbar.Collapse>
+        </Navbar.Collapse> */}
     </Navbar>
 
   )
