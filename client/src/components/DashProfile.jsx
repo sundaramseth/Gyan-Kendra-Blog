@@ -9,6 +9,8 @@ import { updateFailure, updateStart, updateSuccess,deleteUserStart, deleteUserSu
 import { useDispatch } from "react-redux";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { Link } from "react-router-dom";
+
+
 export default function DashProfile() {
   
   
@@ -24,6 +26,7 @@ export default function DashProfile() {
   const [updateUserSuccess, setUpdateUserSuccess] = useState(null);
   const [updateUserError, setUpdateUserError] = useState(null);
   const [showModel, setShowModel] = useState(false);
+
   //   console.log(imageFileUpoadProgress, imageFileUploadError)
 
 console.log(error)
@@ -147,6 +150,8 @@ console.log(error)
     }
   }
 
+
+
   // console.log(formData)
   // console.log(imageFile, imageFileUrl)
 
@@ -187,9 +192,17 @@ console.log(error)
       
        <TextInput type="text" id='username' placeholder='username' defaultValue={currentUser.username} onChange={handleChange} />
 
+       <TextInput type="text" id='about' placeholder='Tell me about your self!' defaultValue={currentUser.about} onChange={handleChange} />
+       
+       <TextInput type="text" id="location" placeholder="Your Location" defaultValue={currentUser.location} onChange={handleChange}  />
+
        <TextInput type="email" id='email' placeholder="email" defaultValue={currentUser.email} onChange={handleChange} />
 
+   
+
        <TextInput type="password" id='password' placeholder="password" onChange={handleChange} />
+
+
         
         <Button type='submit' gradientDuoTone='purpleToBlue' outline disabled={loading || imageFileUploading}>
             {loading?'Loading...': 'Update'}

@@ -6,6 +6,8 @@ import CallToAction from "../components/CallToAction";
 import CommentSection from "../components/CommentSection";
 
 import RecentPostCard from "../components/RecentPostCard";
+import { FaDotCircle } from "react-icons/fa";
+import Ads from "../components/Ads";
 
 export default function PostPage() {
 
@@ -45,12 +47,14 @@ export default function PostPage() {
         }
         fetchPost();
 
+        
+
     },[postSlug]);
 
     useEffect(() => {
         try {
           const fetchRecentPosts = async () => {
-            const res = await fetch(`/api/post/getposts?limit=3`);
+            const res = await fetch(`/api/post/getposts?limit=5`);
             const data = await res.json();
             if (res.ok) {
               setRecentPost(data.posts);
@@ -68,45 +72,93 @@ export default function PostPage() {
     </div>
   ) 
   return (
-    <main className="flex flex-col max-w-6xl mx-auto min-h-screen p-3">
-    
-    <h1 className="text-center font-semibold text-3xl mt-10 p-3 max-w-2xl mx-auto lg:text-4xl">{post && post.title}</h1>
+    <main className="flex flex-row w-full mx-auto min-h-screen p-3 justify-center gap-3">
+
+{/* Left Section */}
+     <div className="flex flex-col w-3/5">
+
+
+      <div className="flex flex-col bg-white rounded-lg border w-full" >
+      <h1 className="text-center font-semibold text-3xl mt-10 p-3 max-w-2xl mx-auto lg:text-4xl">{post && post.title}</h1>
     
     <Link to={`/search?category=${post && post.category}`} className="self-center mt-5">
     <Button color='gray' pill size='xs'>{post && post.category}</Button>
     </Link>
 
-    <img src={post && post.postImage} alt={post && post.slug} className="max-h-[500px] w-full object-cover mt-10 p-3" />
+    <img src={post && post.postImage} alt={post && post.slug} className="max-h-[500px] w-full object-cover mt-10 p-3 rounded-3xl" />
     
-    <div className="flex flex-row justify-between p-3 border-b mx-auto w-full max-w-2xl">
+    <div className="flex flex-row justify-between p-5 border-b mx-auto w-full">
         <span className="text-sm text-gray-600 font-semibold">
-            {post && new Date(post.createdOn).toLocaleDateString()}
+         Posted On -  {post && new Date(post.createdOn).toLocaleDateString()}
         </span>
 
         <span className="text-sm text-gray-600 font-semibold italic">
-            {post && (post.content.length / 1000).toFixed(0)} min read
+          Reading Time -  {post && (post.content.length / 1000).toFixed(0)} min read
         </span>
 
     </div>
 
-    <div className="p-3 max-w-2xl mx-auto w-full post-content" dangerouslySetInnerHTML={{__html:post && post.content}}>
+    <div className="py-5 px-10 mx-auto w-full post-content" dangerouslySetInnerHTML={{__html:post && post.content}}>
     </div>
 
-    <div className="max-w-4xl mx-auto w-full">
-        <CallToAction/>
-    </div>
+  
 
     <CommentSection postId={post && post._id}  />
 
-    <div className='flex flex-col justify-center items-center mb-5'>
-        <h1 className="text-3xl mt-6">Recent Post</h1>
+      </div>
 
-    <div className='flex flex-wrap gap-5 mt-5 justify-center'>
-          {recentPost &&
-            recentPost.map((post) => <RecentPostCard key={post._id} post={post} />)}
-        </div>
+  
 
+
+      </div>
+
+
+    {/* Right Section  */}
+    <div className="flex flex-col w-auto">
+
+    <div className="flex flex-col sticky top-2">
+
+    <div className="flex flex-col w-60 bg-white rounded-lg border ">
+    <div className="flex flex-col w-full">
+      
+      <div className="p-2">
+      <h1 className="text-md font-semibold text-gray-800 pt-px">Recent Blog Post</h1>
+      </div> 
+
+      {/* Divider */}
+      <div className="flex flex-row w-full px-2">
+        <div className="h-px bg-gray-300 w-full">
         </div>
+      </div>
+
+      <div className="pb-2 pr-2">
+      {recentPost &&
+        recentPost.map((post) =>(
+        <div key={post._id} className="mt-2 mb-1 ml-2 flex flex-col gap-1">
+         <Link to={`/post/${post.slug}`}>
+        <p className="text-sm text-gray-800 font-semibold"> {post.title}</p></Link>
+        <p className="text-xs text-gray-500 flex flex-row gap-1 items-center">{new Date(post.createdOn).toLocaleDateString()} <FaDotCircle size={8}/> {post.numberOfLikes} likes</p>
+        </div>
+  
+       ))
+      }
+
+      </div>
+
+  
+
+     </div>
+     </div>
+
+     <Ads/>
+
+     </div>
+
+
+
+
+
+    </div>
 
     </main>
   )

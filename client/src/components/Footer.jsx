@@ -12,7 +12,7 @@ export default function FooterCom() {
         <div className="mt-5">
        <Link to='/' 
         className="self-center whitespace-nowrap sm:text-xl font-semibold">
-        Global Gyan
+        Network AI
         </Link>
        </div>
       

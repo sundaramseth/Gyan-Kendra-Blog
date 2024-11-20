@@ -53,8 +53,8 @@ const handleSubmit = async(e) =>{
       <div className="flex p-3 max-w-3xl mx-auto flex-col md:flex-row md:items-center gap-5">
       {/*left*/}
       <div className="text-left flex-1">
-        <p className="text-3xl font-semibold">Welcome to the Adhyatma</p>
-        <p className="text-sm my-3">This is a blogging site for Adhaytma</p>
+        <p className="text-3xl font-semibold">Welcome to the Network AI</p>
+        <p className="text-sm my-3">Connect, Create and Explore on Network AI</p>
       </div>
 
         {/*Right*/}

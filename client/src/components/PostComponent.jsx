@@ -4,6 +4,8 @@ import { useEffect, useState, useRef  } from "react";
 import {FaThumbsUp} from 'react-icons/fa';
 import { MdInsertComment,MdShare  } from "react-icons/md";
 import { useSelector } from "react-redux";
+import PostCommentSection from "../components/PostCommentSection";
+import { Link } from "react-router-dom";
 
 export default function PostComponent({post, onLike}) {
 
@@ -11,7 +13,7 @@ export default function PostComponent({post, onLike}) {
   const [comments,setComments] = useState([]);
   const [showMore, setShowMore] = useState(true);
   const {currentUser} = useSelector((state)=>state.user);
-  const [height, setHeight] = useState(0);
+  const [openComment, setOpenComment] = useState(false);
   const ref = useRef(null)
 
 
@@ -54,13 +56,20 @@ export default function PostComponent({post, onLike}) {
 
 
   
-  useEffect(()=>{
-    setHeight(ref.current.clientHeight);
-  });
+
 
   const openContent = () =>{
 
     setShowMore(false);
+
+  }
+
+  const handleOpenComment = ()=>{
+    if(openComment){
+      setOpenComment(false);
+    }else{
+      setOpenComment(true);
+    }
 
   }
 
@@ -73,11 +82,13 @@ export default function PostComponent({post, onLike}) {
 
       
         <div className="flex flex-row gap-4">
+        <Link to={`/UserProfile?user=${user._id}`}>
           <img 
           className="border rounded-full w-12"
             alt='user'
             src={user.profilePicture}
             />
+            </Link>
             <div className="flex flex-col">
                 <p className="text-sm font-semibold">{user.username}</p>
                 <p className="text-xs" > {new Date(post.createdOn).toLocaleDateString()}</p>
@@ -93,16 +104,11 @@ export default function PostComponent({post, onLike}) {
       </div>
 
         <div className="flex flex-col">
-            <h1 className="mt-1 mb-5 text-md font-semibold">{post.title}</h1>
-            <img
-                src={post.postImage}
-                alt='post cover'
-                className='h-[260px] w-full object-cover rounded-xl'
-                /> 
+        <h1 className="mt-1 mb-5 text-md font-semibold">{post.title}</h1>
                  
-        <div  ref={ref} className={`mt-5 ${showMore ? 'overflow-hidden text-ellipsis max-h-24':'overflow-hidden text-wrap max-h-max'}`}  dangerouslySetInnerHTML={{__html:post && post.content}}>
+        <div  ref={ref} className={`mt-5 ${showMore ? 'overflow-hidden text-ellipsis max-h-150':'overflow-hidden text-wrap max-h-max'}`}  dangerouslySetInnerHTML={{__html:post && post.content}}>
         </div>
-        {showMore && post.content.length >= 30  && (
+        {showMore && post.content.length >= 20000  && (
          <button className="text-sm text-blue-500" onClick={openContent}>show more</button>
         )}
 
@@ -152,44 +158,47 @@ export default function PostComponent({post, onLike}) {
         
         <div className="flex flex-row justify-between">
 
-          <div className="flex flex-row gap-1">
+          <div className="flex flex-row gap-2 items-center cursor-pointer"  onClick={() => onLike(post._id)}>
           <button
                 type='button'
-                onClick={() => onLike(post._id)}
                 className={`text-gray-400 hover:text-blue-500 ${
                   currentUser &&
                   post?.likes?.includes(currentUser._id) &&
                   '!text-blue-500'
                 }`}
               >
-          <FaThumbsUp className="text-lg"/>
+          <FaThumbsUp className="text-md"/>
         </button>
-        <p>Like</p>
+        <span className="font-sans text-sm font-semibold">Like</span>
           </div>
 
-          <div className="flex flex-row gap-1">
+          <div className="flex flex-row gap-2 items-center cursor-pointer" onClick={handleOpenComment}>
           <button
                 type='button'
                 
                 className={`text-gray-400 hover:text-blue-500`}
               >
-          <MdInsertComment className="text-lg"/>
+          <MdInsertComment className="text-md"/>
         </button>
-        <p>Comment</p>
+         <span className="font-sans text-sm font-semibold">Comment</span>
           </div>
 
-          <div className="flex flex-row gap-1">
+          <div className="flex flex-row gap-2 items-center cursor-pointer">
           <button
                 type='button'
                 // onClick={() => onLike(post._id)}
                 className={`text-gray-400 hover:text-blue-500`}
               >
-          <MdShare className="text-lg"/>
+          <MdShare className="text-md"/>
         </button>
-        <p>Share</p>
+        <span className="font-sans text-sm font-semibold">Share</span>
           </div>
 
         </div>
+
+        {openComment && (
+              <PostCommentSection postId={post && post._id}  />
+        )}
 
       </div>
 

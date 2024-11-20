@@ -42,7 +42,7 @@ export default function Header() {
       <div className="flex w-1/4 justify-start items-start gap-2">
        <Link to='/' 
         className="self-center whitespace-nowrap text-sm sm:text-xl font-semibold">
-        Global Gyan
+        Network AI
         </Link>
         
 

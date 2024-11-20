@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Comment from './Comment';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 
-const CommentSection = ({postId}) => {
+const PostCommentSection = ({postId}) => {
 
      const {currentUser} = useSelector(state => state.user);
     const [comment,setComment] = useState('');
@@ -17,6 +17,7 @@ const CommentSection = ({postId}) => {
     const [comments,setComments] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [commentToDelete, setCommentToDelete] = useState(null);
+    const [rows, setRows] = useState(1);
 
     const navigate = useNavigate();
 
@@ -136,31 +137,21 @@ const CommentSection = ({postId}) => {
         }
       }
 
+
+      const expandTextBox = () =>{
+        if(rows == 1)
+         setRows(prevRows => prevRows + 2);
+        else
+        setRows(1);
+      }
+
    
    
     return (
-      <div className='flex flex-col p-5'>
-      {currentUser ? 
-      (
-        <div className="flex items-center p-3">
-            <p className='text-sm font-semibold'>
-                Signed in as:
-            </p>
-            <div className="flex justify-center items-center">
-            <img src={currentUser.profilePicture} alt={currentUser.username} className='w-7 h-7' />
-           
-           <Link to={'/dashboard?tab=profile'} className='text-sm text-cyan-700 hover:underline'>
-            @ {currentUser.email}
-           </Link>
-           
-           </div>
-
-        </div>
-      )
-      :
+      <div className='flex flex-col p-0'>
+      {!currentUser &&
       (
         <div className="flex py-3 gap-2">
-
             <p className='text-md font-semibold'>Sign In for comment!</p>
             <Link to={'/signin'} className='text-blue-600 font-semibold'>
             Sign In
@@ -170,10 +161,16 @@ const CommentSection = ({postId}) => {
       ) 
       }
       {currentUser && (
-        <form onSubmit={handleSubmit} className=' p-3 rounded-sm items-center'>
+        <form onSubmit={handleSubmit} className='mt-3 rounded-sm items-center'>
           <Textarea 
+          rows={rows}
+          onClick={expandTextBox}
+          style={{
+          width: '100%',
+          resize: 'none', // Disable resizing
+          transition: 'height 0.2s', // Smooth transition
+          }}
           placeholder='Add a comment...'
-          rows='3'
           maxLength='200'
           onChange={(e)=> setComment(e.target.value)}
           value={comment}
@@ -194,16 +191,12 @@ const CommentSection = ({postId}) => {
       )}
       {comments.length === 0 ? 
       (
-        <p className='text-sm my-5'>No comments yet!</p>
+        <p className='text-sm'>No comments yet!</p>
       )
       :
       (
         <>
-          <div className="text-sm my-5 flex items-center gap-1">
-          <p>Comments</p>
-          <div className="border border-gray-400 py-1 px-2 rounded-sm">
-            <p>{comments.length}</p>
-          </div>
+          <div className="w-full bg-gray-200 h-px mt-1">
         </div>
         
         {comments.map((comment) =>
@@ -252,4 +245,4 @@ const CommentSection = ({postId}) => {
      </div>
      )
 }
-export default CommentSection;
+export default PostCommentSection;

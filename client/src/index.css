@@ -15,8 +15,13 @@ body{
     background: #f4f2ee !important;
 }
 
+
 .ql-editor{
 font-size: 1.05rem;
+}
+
+.ql-toolbar.ql-snow .ql-formats {
+  margin-right: 9px !important;
 }
 
 .mywidth{
@@ -106,4 +111,21 @@ font-size: 1.05rem;
     background-image: none !important;
     color: #000 !important;
     width: auto  !important;
+    -webkit-appearance: none; 
+    box-shadow: none !important; 
+    border-radius: none !important;
+}
+
+:-webkit-autofill { color: #fff !important; }
+
+.option{
+  margin: 4px !important;
+  border-radius: none !important;
+}
+
+.postinput:focus{
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+
 }

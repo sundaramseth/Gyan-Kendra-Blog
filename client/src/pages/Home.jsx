@@ -1,44 +1,78 @@
-import { Button } from "flowbite-react";
 import { Link,  useNavigate} from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from 'react';
-import OAuth from "../components/OAuth";
 import StartPost from "../components/StartPost";
 import PostComponent from "../components/PostComponent";
-import { AiFillCaretDown } from "react-icons/ai";
-import { Dropdown } from "flowbite-react";
-
+import { AiFillCaretDown, AiFillLike } from "react-icons/ai";
+import HomePageMain from "../components/HomePageMain";
+import { FaBookmark } from "react-icons/fa";
+import HomeRightSection from "../components/HomeRightSection";
 export default function Home() {
 
   const {currentUser} = useSelector(state => state.user);
   const [posts, setPosts] = useState([]);
   const navigate = useNavigate();
+  const [showMore, setShowMore] = useState(true);
 
-  const [selectedValue, setSelectedValue] = useState('Top');
 
   const handleChange = (event) => {
-    setSelectedValue(event.target.value);
+    try {
+      const fetchPosts = async () => {
+        const res = await fetch(`/api/userpost/getPosts?limit=5`);
+        const data = await res.json();
+       if(event.target.value == "Top"){
+        setPosts( data.posts.sort((a, b) => new Date(b.createdOn) - new Date(a.createdOn)));
+       }else{
+        setPosts( data.posts.sort((a, b) => new Date(a.createdOn) - new Date(b.createdOn)));
+       }
+       if(data.posts.length < 5){
+        setShowMore(false);
+      }
+
+  }
+  fetchPosts();
+} catch (error) {
+    console.log(error.message);
+  }
+
   };
 
-  console.log(currentUser)
+
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      const res = await fetch(`/api/post/getPosts?sort='asc'`);
-      const data = await res.json();
-      setPosts(data.posts);
-    };
-    fetchPosts();
+    try {
+      const fetchPosts = async () => {
+        const res = await fetch(`/api/userpost/getPosts?limit=5`);
+        const data = await res.json();
+        // Sort by createdAt in descending order (newest first)
+      
+
+        setPosts( data.posts.sort((a, b) => new Date(b.createdOn) - new Date(a.createdOn)));
+        if(data.posts.length < 5){
+          setShowMore(false);
+        }
+      };
+      fetchPosts();
+    } catch (error) {
+      console.log(error.message);
+    }
   }, []);
 
-  const filterPost = () =>{
-
-    // alert()
-   
-    // posts.filter(post => post.category = "JavaScript");
+  const handleShowMoreForPost =  async () =>{
+    const startIndex = posts.length;
+    try {
+      const res = await fetch(`/api/userpost/getPosts?startIndex=${startIndex}`); 
+      const data = await res.json();
+      if(res.ok){
+        setPosts((prev)=>[...prev, ...data.posts]);
+        if(data.posts.length <5){
+          setShowMore(false);
+        }
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
-  
-
   
   const handlePostLikes = async (postId) =>{
     try {
@@ -47,7 +81,7 @@ export default function Home() {
         return;
       }
 
-      const res = await fetch(`/api/post/likepost/${postId}` , {
+      const res = await fetch(`/api/userpost/likepost/${postId}` , {
         method:'PUT',
       });
 
@@ -79,88 +113,77 @@ export default function Home() {
     <>
     {!currentUser && (
 
-    <div className="flex flex-col w-full bgback">
-      {/* home top section */}
-    <div className="flex flex-col-reverse md:flex-row w-full justify-evenly py-20">
-    <div className="flex flex-col justify-center md:mx-0 mx-5">
-      <h1 className="text-5xl font-bold line-2x">Global Gyan,<br/> Stories & Ideas</h1>
-      <p className="text-xl my-8">A Place to share your ideas, stories and facts.</p>
-      <OAuth/>
-      <Link to='/signin' className="pt-5">
-        <Button
-        className="rescolor"
-        pill
-        outline
-        color="gray"
-        fullSized="w-full" 
-
-        >
-        Start With Email
-        </Button>
-        </Link>
-  
-  
-        
-  
-    </div>
-
-    <div className="flex flex-col justify-center items-center">
-      <img src="https://firebasestorage.googleapis.com/v0/b/adhyatma-ce6a3.appspot.com/o/1726908550223_Group%202.png?alt=media&token=5520e07d-5466-489b-ad0b-9e5386e298c0"
-      width='550'
-      />
-    </div>
-    </div>
-  
-
-
-
-    {/* Post Section */}
-
-    <div className="flex md:flex-row flex-col w-full justify-evenly bg-stone-100 py-6">
-
-      <div className="flex flex-col justify-center items-start text-left pl-5 mt-5 md:mt-0">
-      <h1 className="text-3xl font-semibold">Explore collaborative articles</h1>
-      <p>Read us out latest content with our expert collaborators.</p>
-      </div>
-      <div className="flex flex-row flex-wrap justify-start gap-2 pl-5 my-5 w-full md:w-1/3">
-      {posts.map((post) => (
-        <>
-            <Button
-            size='sm'
-            outline
-            color="gray"
-            pill>
-              {post.category}
-            </Button>
-            </>
-      ))}
-
-<Link to='/post' className="">
-         <Button
-        pill
-        color="blue" 
-        size="sm"
-        >
-        Show All
-        </Button>
-        </Link>
-
-      </div>
- 
-    </div>
-    </div>
-
+        <HomePageMain/>
   )}
 
 {/* main section */}
 {currentUser && (
   <div className="flex flex-col md:flex-row w-full justify-center px-3 gap-5">
 
-    
-    <div className="w-auto">
-    Hot Section
+    {/* Left Section */}
+    <div className="w-auto justify-center ">
+    <div className="flex flex-col w-52 bg-white mt-6 rounded-lg border">
+      {/* Profile Section */}
+     <div className="flex flex-col w-full rounded-lg ">
+      <div className="flex flex-col">
+      <img 
+      className="w-full max-h-24 rounded-tr-lg rounded-tl-lg" 
+        alt='background'
+        src="https://t4.ftcdn.net/jpg/05/49/86/39/360_F_549863991_6yPKI08MG7JiZX83tMHlhDtd6XLFAMce.jpg"
+        />
+      <Link to='/dashboard?tab=profile'>
+      <img 
+    className="border rounded-full w-14 relative bottom-6 left-3"
+      alt='user'
+      src={currentUser?.profilePicture}
+      /></Link>
+      </div>
+
+      <div className="pl-2">
+      <h1 className="text-lg font-semibold">{currentUser.username}</h1>
+      <p className="text-sm text-gray-800 pt-px">{currentUser.about}</p>
+      <p className="text-gray-500 text-xs pt-px pb-2">
+      {currentUser.location}
+      </p>
+      </div>
+
+     </div>
     </div>
 
+        {/* Post Impression  */}
+    <div className="w-auto justify-center ">
+    <div className="flex flex-col w-52 bg-white mt-2 rounded-lg border">
+        <div className="flex flex-col w-full">
+      <div className="p-4">
+      <p className="text-xs text-gray-800 font-bold pt-px">Profile Viwers <span className="text-xs font-semibold">200</span></p>
+      <p className="text-xs text-gray-800 font-bold pt-2">
+      Post Impression <span className="text-xs font-semibold">500</span>
+      </p>
+      </div>
+
+      <div className="flex flex-row w-full px-2">
+        <div className="h-px bg-gray-300 w-full">
+        </div>
+      </div>
+
+      <div className="mt-4 ml-4 flex flex-row gap-1 items-center">
+      <FaBookmark/>
+      <p className="text-xs text-gray-800 font-semibold"> Saved Post</p>
+      </div>
+      <div className="my-4 ml-4 flex flex-row gap-1 items-center">
+        <AiFillLike/>
+      <p className="text-gray-800 text-xs font-semibold">
+      Liked Post
+      </p>
+      </div>
+
+     </div>
+     </div>
+     </div>
+    </div>
+
+
+    {/* Mid Section  */}
     <div className="flex flex-col justify-center items-center mt-5">
       {/* First Section - Start Post */}
       <div className="flex flex-row w-full justify-center">
@@ -176,7 +199,7 @@ export default function Home() {
         <option value="Latest">Latest</option>
        </select>
        </span>
-       <span>
+       <span className="pt-px">
        <AiFillCaretDown size={12} />
        </span>
         </div>
@@ -193,22 +216,20 @@ export default function Home() {
          {posts.map((post) => (
                 <PostComponent key={post._id} post={post} onLike={handlePostLikes} />
               ))}
-            <Link
-              to={'/search'}
-              className='text-lg text-teal-500 hover:underline text-center'
-            >
-              View all posts
-            </Link>
             </>
   
         )}
      </div>
+     {showMore && (
+              <button onClick={handleShowMoreForPost} className="w-full text-teal-500 self-center text-sm pb-2">
+              Show more
+              </button>
+            )}
     </div>
 
-    <div className="w-auto">
-    Hot Section
-    </div>
 
+    {/* Right Section  */}
+    <HomeRightSection/>
   </div>
 )}
   </>

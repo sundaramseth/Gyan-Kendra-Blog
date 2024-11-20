@@ -14,6 +14,7 @@ import PrivateRouteAdmin from './components/PrivateRouteAdmin'
 import UpdatePost from './pages/UpdatePost'
 import PostPage from './pages/PostPage'
 import ScrollToTop from './components/ScrollTop'
+import UserDashProfile from './components/UserDashProfile'
 
 export default function App() {
   return (
@@ -27,6 +28,7 @@ export default function App() {
       <Route path='/signin' element={<SignIn />} />
       <Route element={<PrivateRoute />}>
       <Route path='/dashboard' element={<Dashboard />} />
+      <Route path='/UserProfile' element={<UserDashProfile />} />
       </Route>
       <Route element={<PrivateRouteAdmin/>}>
        <Route path='/create-post' element={<CreatePost/>} />

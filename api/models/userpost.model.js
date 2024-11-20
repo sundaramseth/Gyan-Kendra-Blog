@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { type } from "os";
 
-const postScema = new mongoose.Schema({
+const newUserPostScema = new mongoose.Schema({
     userId:{
         type:String,
         required:true
@@ -13,19 +13,15 @@ const postScema = new mongoose.Schema({
     category:{
         type:String,
         default:'uncategorized'
-       },
+    },
     postImage:{
         type:String,
         default:'https://t4.ftcdn.net/jpg/05/65/22/41/360_F_565224180_QNRiRQkf9Fw0dKRoZGwUknmmfk51SuSS.jpg',
-       },
-    postMedia:{
-        type:String,
-        default:'',
-       },
+    },
     content:{
         type:String,
         required:true
-       },
+    },
     slug:{
         type:String,
         required:true,
@@ -41,11 +37,11 @@ const postScema = new mongoose.Schema({
     },
     createdOn:{
         type: Date,
-        default:new Date()
+        default:Date.now()
     }
     },{timeStamp:true});
 
-const Post = mongoose.model('Post',postScema);
+const UserPost = mongoose.model('UserPost',newUserPostScema);
 
-export default Post;
+export default UserPost;
 

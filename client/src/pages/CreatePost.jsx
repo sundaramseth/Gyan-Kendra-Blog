@@ -96,7 +96,7 @@ export default function CreatePost() {
         className="flex-1"
         onChange={(e)=>setFormData({...formData, title:e.target.value})}
         />
-        <Select    onChange={(e)=>setFormData({...formData, category:e.target.value})}>
+        <Select onChange={(e)=>setFormData({...formData, category:e.target.value})}>
             <option value="uncategorized">Select a category</option>
             <option value="JavaScript">JavaScript</option>
             <option value="React">React</option>

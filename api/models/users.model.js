@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { type } from "os";
 
 const userSchema = new mongoose.Schema({
     username:{
@@ -15,6 +14,12 @@ const userSchema = new mongoose.Schema({
     password:{
         type:String,
         required:true
+    },
+    about:{
+        type:String
+    },
+    location:{
+        type:String
     },
     profilePicture:{
         type:String,
